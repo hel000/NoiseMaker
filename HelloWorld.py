@@ -1,7 +1,7 @@
 import unittest
 
 def main():
-    print "Hello Matthijs"
+    print "Testing Setup Eclipse PyDev GIT"
 
 
 
