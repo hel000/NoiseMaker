@@ -1,0 +1,47 @@
+<CustTextInput@TextInput>:
+	font_size: 30
+	multiline: False
+	
+<CustLabel@Label>:
+	font_size: 32
+	
+<NoiseMakerFunc>:
+	id: noisemaker
+	rows: 5
+	padding: 10
+	spacing: 10
+	
+	BoxLayout:
+		spacing: 10
+		CustLabel:
+			text: "Interface"
+		CustTextInput:
+			id: conf.iface
+
+	BoxLayout:
+		spacing: 10
+		CustLabel:
+			text: "SSID"
+		CustTextInput:
+			id: ssid
+
+	BoxLayout:
+		spacing: 10
+		CustLabel:
+			text: "Client"
+		CustTextInput:
+			id: client
+
+	BoxLayout:
+		spacing: 10
+		CustLabel:
+			text: "Count"
+		CustTextInput:
+			id: count
+			
+	BoxLayout:
+		spacing:10
+		Button:
+			text: "Deauthenticate"
+			font_size: 32
+			on_press: noisemaker.SendPacket(count.text)		
