@@ -7,7 +7,7 @@
 	
 <NoiseMakerFunc>:
 	id: noisemaker
-	rows: 5
+	rows: 7
 	padding: 10
 	spacing: 10
 	
@@ -16,7 +16,7 @@
 		CustLabel:
 			text: "Interface"
 		CustTextInput:
-			id: conf.iface
+			id: iface
 
 	BoxLayout:
 		spacing: 10
@@ -30,18 +30,29 @@
 		CustLabel:
 			text: "Client"
 		CustTextInput:
-			id: client
+			id: target
 
 	BoxLayout:
 		spacing: 10
 		CustLabel:
 			text: "Count"
 		CustTextInput:
-			id: count
+			id: decount
 			
 	BoxLayout:
 		spacing:10
 		Button:
 			text: "Deauthenticate"
 			font_size: 32
-			on_press: noisemaker.SendPacket(count.text)		
+			on_press: noisemaker.SendPacket(iface,ssid,target,decount)	
+	
+	BoxLayout:
+		spacing:10
+		CustLabel:
+			text: "Output"
+							
+	BoxLayout:
+		spacing:10
+		CustTextInput:
+			id: resultOutput
+			readonly: True
