@@ -14,7 +14,7 @@ class NoiseMakerFunc(GridLayout):
             client = self.ids.target.text
             nssid = self.ids.ssid.text
             count = self.ids.decount.text
-            conf.iface = "eth0"
+            conf.iface = str(self.ids.iface.text)
             print client + ":" + count + ":" + nssid + ":" + conf.iface
             conf.verb = 0
             print "two"
