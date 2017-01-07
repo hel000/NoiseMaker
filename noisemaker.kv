@@ -1,5 +1,8 @@
 <iLabel@Label>:
 	font_size: 18
+	
+<inLabel@Label>:
+	font_size: 18
 
 <NoiseMakerFunc>:
 	id: noisemaker
@@ -39,12 +42,14 @@
 			Label:
 				text: "Interface"
 			TextInput:
+				id: scaniface
 				multiline: False
 		
 		BoxLayout:	
 			Label:
 				text: "Range"
 			TextInput:
+				id: scanamount
 				multiline: False
 
 # Target scan send button
@@ -53,7 +58,10 @@
 			Button:
 				text: "Search Targets"
 				font_size: 18
-				on_press: noisemaker.SendPacket()
+				on_press: noisemaker.ScanTarget()
+
+# Output Target scan
+
 	Label:
 		text: "Targets"
 		size_hint: .05, .1
@@ -64,7 +72,7 @@
 		pos_hint: {"left": .99, "top":.59}
 		
 		TextInput:
-			id: TargetOutput
+			id: targetOutput
 			readonly: True		
 
 # Right side of the program
@@ -95,6 +103,8 @@
 			Label:
 				text: "Client"
 			TextInput:
+				text: "FF:FF:FF:FF:FF:FF"
+				hint_text: "FF:FF:FF:FF:FF:FF is target2ing all clients."
 				id: target
 				multiline: False
 				
@@ -112,7 +122,7 @@
 				text: "Deauthenticate"
 				font_size: 18
 				on_press: noisemaker.SendPacket()
-# Output 
+# Output Deauthentication Attack
 	
 	Label:
 		text: "Output"
