@@ -88,8 +88,10 @@ class NoiseMakerFunc(FloatLayout):
                     print "Corrupt package caught. Skipping."
         print "Choose from these targets:" 
         print target
+        d = ""
         for c in target:
-            print c + ":" + target[c]
+            d += c + ":" + target[c] + "\n"
+        self.ids.targetOutput.text = d
         return target
                 
 class NoiseMakerApp(App):
