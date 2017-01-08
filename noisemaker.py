@@ -62,13 +62,15 @@ class NoiseMakerFunc(FloatLayout):
 
     def ScanTarget (self):
         intface = str(self.ids.scaniface.text)
-        amount = self.ids.scanamount.text #amount of packages that will be listened to before 
+        amount = int(self.ids.scanamount.text) #amount of packages that will be listened to before 
         target = {}
     
     #sniff(iface=intface, prn=lambda x:x.sprintf("{Dot11Beacon:%Dot11.addr3%:%Dot11Beacon.info%}"), count=1) #Returns the following: FF:FF:FF:FF:FF:FF <ESSID>
         try:
             print "Scanning..."
             self.ids.targetOutput.text = "Scanning..."
+            print amount
+            print intface
             a = sniff(iface=intface, count=amount) # Stores all the captured information in a. a.addrx for dest and source
         except socket.error, e:
             print "Error, interface does not exist. " + str(e)
@@ -82,10 +84,6 @@ class NoiseMakerFunc(FloatLayout):
                 try:
                     if str(b.payload.payload.info) is not "":
                         target[b.addr2] = b.payload.payload.info
-                #else:
-                    #print "Possible hidden AP found. Functionality not supported."
-                    #target[b.addr2] = "<Hidden access point>"
-                    #print "Caught hidden AP(?). Details: " + str(b.summary())
                 except AttributeError, e: #Package was incorrect or no beacon. Removing item from dictionary.
                     print "Corrupt package caught. Skipping."
         print "Choose from these targets:" 
