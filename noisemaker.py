@@ -23,9 +23,10 @@ class NoiseMakerFunc(FloatLayout):
         #print 'Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
         return
     
-    def outputPrintPacket(self, val2):
-        self.ids.resultOutput.text += ' Deauth sent via: '  ' to BSSID: ' ' for Client: '  "\n"
+    def outputPrintPacket(self, nssid, sendiface, client, packet):
+        self.ids.resultOutput.text += 'Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
         #print 'Deauth sent via: ' + sendiface + ' to BSSID: ' + nssid + ' for Client: ' + client + "\n"
+        sendp(packet)
         return        
     
     def SendPacket (self):  
@@ -48,7 +49,7 @@ class NoiseMakerFunc(FloatLayout):
                     #threads.append(t)
                     #t.start()
                     #s.start()
-                    Clock.schedule_once(self.outputPrintPacket)
+                    Clock.schedule_once(self.outputPrintPacket(nssid,sendiface,client,packet))
 
                     #print 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + nssid + ' for Client: ' + client
                     #self.ids.resultOutput.text = 'Deauth sent via: ' + conf.iface + ' to BSSID: ' + nssid + ' for Client: ' + client
