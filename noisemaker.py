@@ -67,25 +67,18 @@ class NoiseMakerFunc(FloatLayout):
         try:
             print "Scanning..."
             self.ids.targetOutput.text = "Scanning..."
-            print amount
-            print intface
             a = sniff(iface=intface, count=amount) # Stores all the captured information in a. a.addrx for dest and source
         except socket.error, e:
             print "Error, interface does not exist. " + str(e)
             self.ids.targetOutput.text = "Error, interface does not exist. " + str(e)
-            return 1
-        # use a[9].payload.payload.info for the SSID
-    
+            return 1    
         for b in a:
             if str(b.summary()).find("Dot11Beacon") and not str(b.addr2) == "None": #Only process the current package if it is a beacon. Also, apparently find tends to just fail at its job.
-                #print b.addr2
                 try:
                     if str(b.payload.payload.info) is not "":
                         target[b.addr2] = b.payload.payload.info
                 except AttributeError, e: #Package was incorrect or no beacon. Removing item from dictionary.
                     print "Corrupt package caught. Skipping."
-        print "Choose from these targets:" 
-        print target
         d = ""
         for c in target:
             d += c + ":" + target[c] + "\n"
