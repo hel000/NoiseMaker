@@ -1,11 +1,8 @@
-<iLabel@Label>:
-	font_size: 18
-	
-<inLabel@Label>:
-	font_size: 18
-
 <NoiseMakerFunc>:
+# id for the application 	
 	id: noisemaker
+	
+# Graphical elements of the application
 	canvas.before:
         Color:
             rgba: 0.1, 0.1, 0.1, 1
@@ -14,7 +11,6 @@
             size: 1000,400
 
 # 'Title' of the program   
-
 	Label:
 		text: "NoiseMaker"
 		font_size: 36
@@ -22,16 +18,13 @@
 		pos_hint: {"left": 1, "top":.995}
 
 # 'Made by' of the program		
-
 	Label:
 		text: "Created by: Matthijs Kloosterboer and Jeroen Rademaker"
 		pos_hint: {"right": 1, "bottom":.99}
 		size_hint: .4, .1
 
-# Left side of the program
-
-# Target scan input labels and fields
-
+# Target scan
+# Input labels and fields
 	GridLayout:
 		size_hint: .49, .23
 		pos_hint: {"left": .99, "top":.88}
@@ -43,6 +36,8 @@
 				text: "Interface"
 			TextInput:
 				id: scaniface
+				hint_text: "e.g. wlan0mon"
+				write_tab: False
 				multiline: False
 		
 		BoxLayout:	
@@ -50,18 +45,18 @@
 				text: "Range"
 			TextInput:
 				id: scanamount
+				hint_text: "e.g. 500 for a neighborhood"
+				write_tab: False
 				multiline: False
 
-# Target scan send button
-
+# Search button
 		BoxLayout:	
 			Button:
 				text: "Search Targets"
 				font_size: 18
 				on_press: noisemaker.ScanTarget()
 
-# Output Target scan
-
+# Output
 	Label:
 		text: "Targets"
 		size_hint: .05, .1
@@ -73,12 +68,13 @@
 		
 		TextInput:
 			id: targetOutput
-			readonly: True		
+			write_tab: False
+			readonly: True
+			font_name: "Consola"
+			font_size: 14		
 
-# Right side of the program
-
-# Deauthentication input labels and fields	
-
+# Deauthentication attack
+# Input labels and fields	
 	GridLayout:
 		size_hint: .49, .4
 		pos_hint: {"right": .99, "top":.88}
@@ -90,13 +86,17 @@
 				text: "Interface"
 			TextInput:
 				id: iface
+				hint_text: "e.g. wlan0mon"
+				write_tab: False
 				multiline: False
 		
 		BoxLayout:	
 			Label:
-				text: "SSID"
+				text: "BSSID"
 			TextInput:
 				id: ssid
+				hint_text: "e.g. AB:CD:EF:12:34:56"
+				write_tab: False
 				multiline: False
 
 		BoxLayout:	
@@ -104,8 +104,9 @@
 				text: "Client"
 			TextInput:
 				text: "FF:FF:FF:FF:FF:FF"
-				hint_text: "FF:FF:FF:FF:FF:FF is target2ing all clients."
+				hint_text: "e.g. FF:FF:FF:FF:FF:FF for all clients."
 				id: target
+				write_tab: False
 				multiline: False
 				
 		BoxLayout:	
@@ -113,17 +114,18 @@
 				text: "Count"
 			TextInput:
 				id: decount
+				hint_text: "e.g. 10 for 10 packets"
+				write_tab: False
 				multiline: False
 
-# Deauthentication send button				
-
+# Send button				
 		BoxLayout:	
 			Button:
 				text: "Deauthenticate"
 				font_size: 18
 				on_press: noisemaker.SendPacket()
-# Output Deauthentication Attack
-	
+
+# Output
 	Label:
 		text: "Output"
 		size_hint: 0.05, .1
@@ -132,7 +134,9 @@
 	BoxLayout:
 		size_hint: .49, .3
 		pos_hint: {"right": .99, "top":.42}
-		
 		TextInput:
+			write_tab: False
 			id: resultOutput
 			readonly: True
+			font_name: "Consola"
+			font_size: 14
